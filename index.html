@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iWrite - Coming Soon</title>
+    <link rel="icon" type="image/png" href="iWrite_favicon.png">
+    <style>
+        /* CSS Reset and Defaults */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Import local fonts */
+        @font-face {
+            font-family: 'Comfortaa';
+            src: url('Comfortaa-VariableFont_wght.ttf') format('truetype');
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'TAN Pearl';
+            src: url('tan-pearl.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100vh; /* Set height to full viewport height */
+            font-family: 'Comfortaa', sans-serif;
+            background-color: #ffffff; /* White background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* For absolute positioning of corners */
+            overflow: hidden; /* Hide scrollbars if any */
+        }
+
+        /* Center content container */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: -80px; /* Slight offset up to visually center better */
+        }
+
+        /* 'Coming Soon!' text container */
+        .coming-soon {
+            font-size: 22px;
+            color: #8c8c8c; /* Exact matching grey */
+            font-weight: 300;
+            margin-bottom: 8px; /* Close to iWrite */
+            letter-spacing: 0.5px;
+        }
+
+        /* 'iWrite' text container */
+        .brand-name {
+            font-family: 'TAN Pearl', serif;
+            font-size: 110px; /* Large font size */
+            color: #000000;
+            line-height: 1.1;
+            margin-bottom: 45px; /* Spacing between iWrite and Timer */
+            font-weight: normal;
+            letter-spacing: 3px;
+        }
+
+        /* Timer layout */
+        .timer {
+            display: flex;
+            gap: 45px; /* Spacing between time blocks */
+        }
+
+        .time-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Countdown numbers */
+        .time-number {
+            font-size: 26px;
+            color: #1a1a1a;
+            font-weight: 600; /* Bolder numbers */
+            margin-bottom: 8px;
+        }
+
+        /* Days, Hrs, Mins, Secs labels */
+        .time-label {
+            font-size: 10px;
+            color: #9e9e9e;
+            text-transform: uppercase;
+            letter-spacing: 1px; /* Subtle letter spacing */
+            font-weight: 400;
+        }
+
+        /* Bottom Left text container */
+        .bottom-left-corner {
+            position: absolute;
+            bottom: 40px;
+            left: 50px;
+        }
+
+        .bottom-left-corner p {
+            font-size: 13px;
+            color: #7b7b7b;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+        }
+
+        .arrow-icon {
+            font-size: 11px;
+            margin-left: 6px;
+            color: #7b7b7b;
+            font-weight: bold;
+        }
+
+        /* Bottom Right text and logo container */
+        .bottom-right-corner {
+            position: absolute;
+            bottom: 35px;
+            right: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .previously-as {
+            font-size: 13px;
+            color: #7b7b7b;
+            font-weight: 400;
+        }
+
+        .scienceby-logo {
+            height: 28px; /* Adjust based on actual aspect ratio */
+            object-fit: contain;
+            opacity: 0.85; /* Subtle blend */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .brand-name {
+                font-size: 70px;
+                margin-bottom: 30px;
+            }
+            .timer {
+                gap: 25px;
+            }
+            .time-number {
+                font-size: 22px;
+            }
+            body {
+                justify-content: flex-start;
+                padding-top: 20vh;
+                overflow-y: auto;
+            }
+            .main-content {
+                margin-top: 0;
+            }
+            .bottom-left-corner, .bottom-right-corner {
+                position: static;
+                margin-top: 60px;
+            }
+            .bottom-right-corner {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <div class="coming-soon">Coming Soon!</div>
+        <div class="brand-name">iWrite</div>
+        
+        <div class="timer">
+            <div class="time-block">
+                <span class="time-number" id="days">39</span>
+                <span class="time-label">DAYS</span>
+            </div>
+            <div class="time-block">
+                <span class="time-number" id="hours">05</span>
+                <span class="time-label">HRS</span>
+            </div>
+            <div class="time-block">
+                <span class="time-number" id="minutes">08</span>
+                <span class="time-label">MINS</span>
+            </div>
+            <div class="time-block">
+                <span class="time-number" id="seconds">12</span>
+                <span class="time-label">SECS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom corners with absolute positioning -->
+    <div class="bottom-left-corner">
+        <p>By DhiShi Scientific Pvt Ltd. <span class="arrow-icon">↗</span></p>
+    </div>
+
+    <div class="bottom-right-corner">
+        <span class="previously-as">Previously as</span>
+        <img src="ScienceBy.png" alt="ScienceBy" class="scienceby-logo">
+    </div>
+
+    <script>
+        // Set the countdown date to 39 days, 5 hours, 8 mins, 12 seconds from current time
+        // so it looks like the initial image on load but actually ticks down
+        
+        const countToDate = new Date();
+        countToDate.setDate(countToDate.getDate() + 39);
+        countToDate.setHours(countToDate.getHours() + 5);
+        countToDate.setMinutes(countToDate.getMinutes() + 8);
+        countToDate.setSeconds(countToDate.getSeconds() + 12);
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const distance = countToDate - now;
+
+            if (distance < 0) {
+                return; // Stop timer when reached zero
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Update DOM with padded string variations
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+        };
+
+        // Initialize display and interval
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
