@@ -251,14 +251,8 @@
     </div>
 
     <script>
-        // Set the countdown date to 39 days, 5 hours, 8 mins, 12 seconds from current time
-        // so it looks like the initial image on load but actually ticks down
-
-        const countToDate = new Date();
-        countToDate.setDate(countToDate.getDate() + 39);
-        countToDate.setHours(countToDate.getHours() + 5);
-        countToDate.setMinutes(countToDate.getMinutes() + 8);
-        countToDate.setSeconds(countToDate.getSeconds() + 12);
+        // Set the countdown date to September 1, 2026 9:00 AM
+        const countToDate = new Date('September 1, 2026 09:00:00');
 
         const updateTimer = () => {
             const now = new Date().getTime();
